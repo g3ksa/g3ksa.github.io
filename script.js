@@ -155,11 +155,7 @@ function createOptionsMonths(curMonth = 0) {
 	let monthOptions = '';
 
 	while(date.getFullYear() == year){
-		monthOptions += '<option value="'
-					+ date.getMonth()
-					+ '">'
-					+ monthsArray[date.getMonth()]
-					+ '</option>';
+		monthOptions += `<option value="${date.getMonth()}">${monthsArray[date.getMonth()]}</option>`;
 		
 		date.setMonth(date.getMonth() + 1);
 	}
@@ -193,7 +189,7 @@ function loadLocalTasks() {
 				todoDiv.classList.add('overdue');
 				newTodo.innerText = `${task.description.toUpperCase()}\n${task.deadLine.toUpperCase()}`;
 			}else {
-				newTodo.innerText = task.description + '\n' +  task.deadLine;
+				newTodo.innerText = `${task.description}\n${task.deadLine}`;
 			}
 
 			
