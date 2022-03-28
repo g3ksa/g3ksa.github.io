@@ -91,7 +91,7 @@ function deleteEditCheck(e) {
 	const item = e.target;
 
 	if(item.classList[0] === 'trash-btn') {
-		const todo = item.parentElement;
+		const todo = item.parentElement.parentElement;
 		todo.classList.add('fall');
 		tasks.splice(+todo.getAttribute('num'), 1);
 		updateLocalStorage();
@@ -107,7 +107,7 @@ function deleteEditCheck(e) {
 	}
 
 	if(item.classList[0] === 'complete-btn') {
-		const todo = item.parentElement;
+		const todo = item.parentElement.parentElement;
 
 		todo.classList.toggle('completed');
 		tasks.forEach((task, index) => {
@@ -138,11 +138,7 @@ function addDate() {
 	let dateOptions ='';
 
 	while(date.getMonth() == month.options[month.selectedIndex].value){
-		dateOptions += '<option value="'
-					+ date.getDate()
-					+ '">'
-					+ date.getDate()
-					+'</option>';
+		dateOptions += `<option value="${date.getDate()}">${date.getDate()}</option>`;
 
 		date.setDate(date.getDate() + 1);
 	}
@@ -193,12 +189,18 @@ function loadLocalTasks() {
 			todoDiv.setAttribute('num', `${index}`);
 
 			const newTodo = document.createElement('li');
-			newTodo.innerText = task.description + '\n' +  task.deadLine;
+			if(new Date(task.dateOfDeadLine) < new Date()) {
+				todoDiv.classList.add('overdue');
+				newTodo.innerText = `${task.description.toUpperCase()}\n${task.deadLine.toUpperCase()}`;
+			}else {
+				newTodo.innerText = task.description + '\n' +  task.deadLine;
+			}
+
+			
+			
 			newTodo.classList.add('todo-item');
 			todoDiv.appendChild(newTodo);
-			if(task.dateOfDeadLine < new Date()) {
-				newTodo.classList.add('overdue');
-			}
+			
 
 			const btnDiv = document.createElement('div');
 			btnDiv.classList.add('task-btns');
