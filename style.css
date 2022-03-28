@@ -1,0 +1,251 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: linear-gradient(120deg, #a131ce, #dd9426) no-repeat;
+	color: #fff;
+	font-family: 'Poppins', sans-serif;
+	min-height: 100vh;
+	overflow: none;
+}
+
+header{
+	font-size: 1.5rem;
+	min-height: 20vh;
+}
+
+header,
+form {
+	min-height: 20vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+form input,
+form button,
+form select{
+	min-height: 3rem;
+	padding: 0.5rem;
+	font-size: 1.5rem;
+	border: none;
+	background: #fff;
+}
+
+#tasks-settings {
+	display: flex;
+}
+
+.todo-button {
+	border-radius: 0 .5rem .5rem 0;
+}
+
+.todo-input-text{
+	border-radius: .5rem 0 0 .5rem;
+}
+
+#date {
+	display: flex;
+}
+
+form button {
+	color: #d88771;
+	background: #fff;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+form button:hover {
+	background: #d88771;
+	color: #fff;
+}
+
+.todo-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* text-align: center; */
+	text-align: center;
+}
+
+.todo-list {
+	min-width: 30%;
+	list-style: none;
+}
+
+.todo {
+	margin: 0.5rem;
+	background: #fff;
+	font-size: 1.5rem;
+	color: black;
+	display: flex;
+	justify-content: space-between;
+	transition: all 0.5s ease;
+}
+
+.todo-item {
+	flex: 1;
+	word-break: break-word;
+	min-width: 242.6px;
+}
+
+.task-btns {
+	display: flex;
+	justify-content: center;
+}
+
+.complete-btn,
+.trash-btn,
+.edit-btn {
+	background: #ff6f47;
+	color: #fff;
+	border: none;
+	padding: 1rem;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+.complete-btn {
+	background: rgb(65, 180, 65);
+}
+
+.edit-btn {
+	background: rgb(141, 141, 141);
+}
+
+.todo-item {
+	padding: 0rem 0.5rem;
+}
+
+.todo {
+	border-radius: .5rem;
+	max-width: 70vw;
+}
+
+.trash-btn {
+	border-radius: 0 .5rem .5rem 0;
+}
+
+.fa-trash,
+.fa-check {
+	pointer-events: none;
+}
+
+.overdue {
+	color: red;
+}
+
+.completed {
+	text-decoration: line-through;
+	opacity: 0.5;
+}
+
+.fall {
+	transform: translateY(8rem) rotateZ(20deg);
+	opacity: 0;
+}
+
+@media(max-width: 768px) {
+	.todo-input-text{
+		width: 90%;
+		border-radius: .5rem;
+		margin-bottom: 1%;
+	}
+
+	#month{
+		border-radius: .5rem 0 0 .5rem;
+	}
+
+	form{
+		flex-wrap: wrap;
+		
+	}
+
+	.todo {
+		min-width: 90vw;
+	}
+
+}
+
+@media(max-width: 330px) {
+	#tasks-settings {
+		margin-bottom: 70%;
+	}
+}
+
+@media(max-width: 355px) {
+	form {
+		flex-wrap: wrap;
+	}
+
+	#tasks-settings {
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.todo-button {
+		margin-top: 5%;
+		border-radius: .5rem; 
+		width: 90vw;
+	}
+	
+	#day {
+		border-radius: 0 .5rem .5rem 0;
+		margin-right: 5%;
+		font-size: 1.2rem;
+	}
+
+	#month {
+		margin-left: 5%;
+		font-size: 1.2rem;
+	}
+
+	#year {
+		flex: 1 ; 
+		max-width: 125px;
+		min-width: none;
+		font-size: 1.2rem;
+	}
+
+	.todo-button {
+		margin-top: 3%;
+		padding: 0.2rem;
+		font-size: 2rem;
+	}
+
+	.todo-input-text {
+		margin-bottom: 5%;
+	}
+
+}
+
+@media(max-width: 425px) {
+	header {
+		font-size: 1.2rem;
+		text-align: center;
+	}
+
+	.todo {
+		display: inline-block;
+	}
+
+	.task-btns button {
+		flex: 1 0 33.333%;
+	}
+
+	.todo {
+		flex-wrap: wrap;
+	}
+
+	.edit-btn {
+		border-bottom-left-radius: .5rem;
+	}
+
+	.trash-btn {
+		border-top-right-radius: 0;
+	}
+}
