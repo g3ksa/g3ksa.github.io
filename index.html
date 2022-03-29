@@ -12,25 +12,34 @@
 	<title>ToDo List</title>
 </head>
 <body>
-	<header>
-		<h1>Your ToDo List</h1>
-	</header>
-	<form>
-		<input type="text" class="todo-input-text" placeholder="input task">
-		<div id="tasks-settings">
-			<select id="month"></select>
-			<input id="year" type="number" value="2022" min="2022" max="9999" size="4" class="todo-input-year">
-			<select id="day"></select>
-			<button class="todo-button">
-				<i class="fas fa-plus-square"></i>
-			</button>
-		</div>	
-	</form>
-	<div class="todo-container">
-		<ul class="todo-list">
+	
+	<div class="wrapper">
+		<header>
+			<h1>Your ToDo List</h1>
+		</header>
+		<div class="main">
+			<form>
+				<input type="text" class="todo-input-text" placeholder="input task">
+				<div id="tasks-settings">
+					<select id="month"></select>
+					<input id="year" type="number" value="2022" min="2022" max="9999" size="4" class="todo-input-year">
+					<select id="day"></select>
+					<button class="todo-button">
+						<i class="fas fa-plus-square"></i>
+					</button>
+				</div>	
+			</form>
+			<div class="todo-container">
+				<ul class="todo-list">
 
-		</ul>
+				</ul>
+			</div>
+		</div>
+		<footer class="footer">
+			<a href="https://www.tinkoff.ru/rm/kuzmin.artem82/vwtrb19490">Помоги сайту</a>
+		</footer>
 	</div>
+	
 
 	<script src="./script.js"></script>
 </body>

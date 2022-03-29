@@ -47,7 +47,15 @@ function addTodo(event) {
 		todoDiv.setAttribute('num', `${tasks.length}`);
 
 		const newTodo = document.createElement('li');
-		newTodo.innerText = todoInput.value + '\n' +  deadLine;
+		const todoText = document.createElement('span');
+		const todoDeadLine = document.createElement('span');
+		todoText.innerText = todoInput.value;
+		todoText.classList.add('todo-item-text');
+		newTodo.append(todoText);
+		newTodo.append(document.createElement('br'));
+		todoDeadLine.innerText = deadLine;
+		todoDeadLine.classList.add('todo-item-deadline');
+		newTodo.append(todoDeadLine);
 		newTodo.classList.add('todo-item');
 		todoDiv.appendChild(newTodo);
 
@@ -124,6 +132,19 @@ function deleteEditCheck(e) {
 		updateLocalStorage();
 	}
 
+	if(item.classList[0] === 'edit-btn') {
+		const todo = item.parentElement.parentElement;
+		const todoText = todo.childNodes[0].innerText;
+		todo.childNodes[0].remove();
+
+		const editInput = document.createElement('input');
+		editInput.value = todoText;
+		editInput.classList.add('todo-item');
+		todo.childNodes[0].insertAdjacentElement('beforebegin', editInput);
+
+		
+	}
+
 }
 
 function addDate() {
@@ -185,15 +206,27 @@ function loadLocalTasks() {
 			todoDiv.setAttribute('num', `${index}`);
 
 			const newTodo = document.createElement('li');
+			const todoText = document.createElement('span');
+			const todoDeadLine = document.createElement('span');
 			if(new Date(task.dateOfDeadLine) < new Date()) {
 				todoDiv.classList.add('overdue');
-				newTodo.innerText = `${task.description.toUpperCase()}\n${task.deadLine.toUpperCase()}`;
+				todoText.innerText = task.description.toUpperCase();
+				todoText.classList.add('todo-item-text');
+				newTodo.append(todoText);
+				newTodo.append(document.createElement('br'));
+				todoDeadLine.innerText = task.deadLine.toUpperCase();
+				todoDeadLine.classList.add('todo-item-deadline');
+				newTodo.append(todoDeadLine);
 			}else {
-				newTodo.innerText = `${task.description}\n${task.deadLine}`;
+				todoText.innerText = task.description;
+				todoText.classList.add('todo-item-text');
+				newTodo.append(todoText);
+				newTodo.append(document.createElement('br'));
+				todoDeadLine.innerText = task.deadLine;
+				todoDeadLine.classList.add('todo-item-deadline');
+				newTodo.append(todoDeadLine);
 			}
 
-			
-			
 			newTodo.classList.add('todo-item');
 			todoDiv.appendChild(newTodo);
 			
@@ -222,9 +255,6 @@ function loadLocalTasks() {
 		
 		})
 	}
-
-
-	
 }
 
 function checkRepeat(tasks, description, deadLine) {

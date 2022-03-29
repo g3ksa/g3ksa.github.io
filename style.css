@@ -8,13 +8,43 @@ body {
 	background: linear-gradient(120deg, #a131ce, #dd9426) no-repeat;
 	color: #fff;
 	font-family: 'Poppins', sans-serif;
-	min-height: 100vh;
-	overflow: none;
+	height: 100vh;
 }
 
-header{
+.wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.main {
+	flex: 1 1 auto;
+}
+
+header {
 	font-size: 1.5rem;
 	min-height: 20vh;
+}
+
+footer {
+	padding: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+footer a {
+	padding: 0.5rem;
+	text-decoration: none;
+	color: #fff;
+	font-size: 1.5rem;
+}
+
+footer a:hover {
+	padding: 0.5rem;
+	color: #d88771;
+	background: #fff;
+	border-radius: 1rem;
 }
 
 header,
@@ -249,4 +279,5 @@ form button:hover {
 	.trash-btn {
 		border-top-right-radius: 0;
 	}
+
 }
