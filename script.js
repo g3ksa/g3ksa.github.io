@@ -204,8 +204,8 @@ function deleteEditCheck(e) {
 			const editInput = document.createElement('input');
 			editInput.value = todoText;
 			editInput.classList.add('todo-item');
-			editInput.style.fontSize = 1.5 + 'rem';
 			editInput.style.border = 'none';
+			editInput.style.display = 'block';
 			todo.childNodes[0].insertAdjacentElement('beforebegin', editInput);
 			item.style.display = 'none';
 		}
