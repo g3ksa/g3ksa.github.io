@@ -39,7 +39,7 @@ function addTodo(event) {
 	}else{
 		curMonth = +month.options[month.selectedIndex].value + 1;
 	}
-	const deadLine = `until ${curDay}.${curMonth}.${+year.value}`
+	const deadLine = `Срок: ${curDay}.${curMonth}.${+year.value}`
 
 	if(todoInput.value.trim() && !checkRepeat(tasks, todoInput.value, deadLine)) {
 		const todoDiv = document.createElement('div');
@@ -63,7 +63,7 @@ function addTodo(event) {
 		btnDiv.classList.add('task-btns');
 
 		const editButton = document.createElement('button');
-		editButton.innerHTML = '<i class="fa fa-pen"></i>';
+		editButton.innerHTML = '<i class="fas fa-pen"></i>';
 		editButton.classList.add('edit-btn');
 		btnDiv.appendChild(editButton);
 
@@ -100,48 +100,115 @@ function deleteEditCheck(e) {
 
 	if(item.classList[0] === 'trash-btn') {
 		const todo = item.parentElement.parentElement;
-		todo.classList.add('fall');
-		tasks.splice(+todo.getAttribute('num'), 1);
-		updateLocalStorage();
-		document.querySelectorAll('.todo').forEach((item) => {
-			if(item.getAttribute('num') >= todo.getAttribute('num')){
-				item.setAttribute('num', +item.getAttribute('num') - 1);
-			}
-		});
+
+		if(todo.childNodes[0].tagName !== 'LI') {
+			const newTodo = document.createElement('li');
+			newTodo.classList.add('todo-item');
+
+			const todoText = document.createElement('span');
+			todoText.innerText = tasks[+todo.getAttribute('num')].description; 
+			todoText.classList.add('todo-item-text');
+			newTodo.append(todoText);
+			
+			newTodo.append(document.createElement('br'));
+			
+			const todoDeadLine = document.createElement('span');
+			todoDeadLine.innerText = tasks[+todo.getAttribute('num')].deadLine;
+			todoDeadLine.classList.add('todo-item-deadline');
+			newTodo.append(todoDeadLine);
+
+			const trashButton = document.querySelectorAll('.trash-btn i')[+todo.getAttribute('num')];
+			trashButton.classList.value = 'fas fa-trash';
+
+			todo.childNodes[0].remove();
+			todo.childNodes[0].insertAdjacentElement('beforebegin', newTodo);
+			document.querySelectorAll('.edit-btn')[+todo.getAttribute('num')].style.display = '';
+		}else {
+			todo.classList.add('fall');
+			tasks.splice(+todo.getAttribute('num'), 1);
+			updateLocalStorage();
+			document.querySelectorAll('.todo').forEach((item) => {
+				if(item.getAttribute('num') >= todo.getAttribute('num')){
+					item.setAttribute('num', +item.getAttribute('num') - 1);
+				}
+			});
+			
+			todo.addEventListener('transitionend', function() {
+				todo.remove();
+			});
+		}
+
 		
-		todo.addEventListener('transitionend', function() {
-			todo.remove();
-		});
 	}
 
 	if(item.classList[0] === 'complete-btn') {
 		const todo = item.parentElement.parentElement;
 
-		todo.classList.toggle('completed');
-		tasks.forEach((task, index) => {
-			if(((task.description + '\n' +  task.deadLine == todo.querySelector('.todo-item').innerText) || (task.deadLine == todo.querySelector('.todo-item').innerText)) && index == +todo.getAttribute('num')){
-
-				if(todo.classList.contains('completed')){
-					task.completed = true;
-				}else{
-					task.completed = false;
-				}
-				
+		if(todo.childNodes[0].tagName !== 'LI'){
+			const inputText = document.querySelectorAll('.todo-item')[+todo.getAttribute('num')].value;
+			if(!checkRepeat(tasks, inputText, tasks[+todo.getAttribute('num')].deadLine)) {
+				tasks[+todo.getAttribute('num')].description = inputText;
+			}else {
+				alert('Такая запись уже существует');
 			}
-		});
+			
+			todo.childNodes[0].remove();
+
+			const newTodo = document.createElement('li');
+			newTodo.classList.add('todo-item');
+
+			const todoText = document.createElement('span');
+			todoText.innerText = tasks[+todo.getAttribute('num')].description; 
+			todoText.classList.add('todo-item-text');
+			newTodo.append(todoText);
+			
+			newTodo.append(document.createElement('br'));
+			
+			const todoDeadLine = document.createElement('span');
+			todoDeadLine.innerText = tasks[+todo.getAttribute('num')].deadLine;
+			todoDeadLine.classList.add('todo-item-deadline');
+			newTodo.append(todoDeadLine);
+
+			const trashButton = document.querySelectorAll('.trash-btn i')[+todo.getAttribute('num')];
+			trashButton.classList.value = 'fas fa-trash';
+			
+			todo.childNodes[0].insertAdjacentElement('beforebegin', newTodo);
+			document.querySelectorAll('.edit-btn')[+todo.getAttribute('num')].style.display = '';
+		}else {
+			todo.classList.toggle('completed');
+			tasks.forEach((task, index) => {
+				if(((task.description + '\n' +  task.deadLine == todo.querySelector('.todo-item').innerText) || (task.deadLine == todo.querySelector('.todo-item').innerText)) && index == +todo.getAttribute('num')){
+
+					if(todo.classList.contains('completed')){
+						task.completed = true;
+					}else{
+						task.completed = false;
+					}
+					
+				}
+			});
+			
+		}
+
 		updateLocalStorage();
 	}
 
 	if(item.classList[0] === 'edit-btn') {
 		const todo = item.parentElement.parentElement;
-		const todoText = todo.childNodes[0].innerText;
-		todo.childNodes[0].remove();
+		if(todo.childNodes[0].tagName === 'LI') {
+			const todoText = document.querySelectorAll('.todo-item-text')[+todo.getAttribute('num')].innerText;
+			const trashButton = document.querySelectorAll('.trash-btn i')[+todo.getAttribute('num')];
+			trashButton.classList.value = 'fas fa-ban';
+			todo.childNodes[0].remove();
 
-		const editInput = document.createElement('input');
-		editInput.value = todoText;
-		editInput.classList.add('todo-item');
-		todo.childNodes[0].insertAdjacentElement('beforebegin', editInput);
-
+			const editInput = document.createElement('input');
+			editInput.value = todoText;
+			editInput.classList.add('todo-item');
+			editInput.style.fontSize = 1.5 + 'rem';
+			editInput.style.border = 'none';
+			todo.childNodes[0].insertAdjacentElement('beforebegin', editInput);
+			item.style.display = 'none';
+		}
 		
 	}
 
@@ -235,7 +302,7 @@ function loadLocalTasks() {
 			btnDiv.classList.add('task-btns');
 
 			const editButton = document.createElement('button');
-			editButton.innerHTML = '<i class="fa fa-pen"></i>';
+			editButton.innerHTML = '<i class="fas fa-pen"></i>';
 			editButton.classList.add('edit-btn');
 			btnDiv.appendChild(editButton);
 

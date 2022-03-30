@@ -4,6 +4,10 @@
 	box-sizing: border-box;
 }
 
+input {
+	outline: none;
+}
+
 body {
 	background: linear-gradient(120deg, #a131ce, #dd9426) no-repeat;
 	color: #fff;
@@ -120,6 +124,8 @@ form button:hover {
 	flex: 1;
 	word-break: break-word;
 	min-width: 242.6px;
+	min-height: 70px;
+	border: none;
 }
 
 .task-btns {
@@ -148,7 +154,11 @@ form button:hover {
 
 .todo-item {
 	padding: 0rem 0.5rem;
+	border-radius: .5rem 0 0 .5rem;
+	text-align: center;
 }
+
+
 
 .todo {
 	border-radius: .5rem;
@@ -160,7 +170,9 @@ form button:hover {
 }
 
 .fa-trash,
-.fa-check {
+.fa-check,
+.fa-pen,
+.fa-ban {
 	pointer-events: none;
 }
 
@@ -207,7 +219,7 @@ form button:hover {
 	}
 }
 
-@media(max-width: 355px) {
+@media(max-width: 370px) {
 	form {
 		flex-wrap: wrap;
 	}
