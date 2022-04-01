@@ -44,6 +44,7 @@ function addTodo(event) {
 	if(todoInput.value.trim() && !checkRepeat(tasks, todoInput.value, deadLine)) {
 		const todoDiv = document.createElement('div');
 		todoDiv.classList.add('todo');
+		todoDiv.classList.add('new');
 		todoDiv.setAttribute('num', `${tasks.length}`);
 
 		const newTodo = document.createElement('li');
@@ -89,9 +90,12 @@ function addTodo(event) {
 			tasks.push(new Task(todoInput.value, deadLine, new Date(+year.value, +month.options[month.selectedIndex].value, +day.value+1)))
 			updateLocalStorage()
 		}
-			todoInput.value = '';
-	}
+		todoInput.value = '';
 
+		document.querySelectorAll('.todo')[tasks.length - 1].addEventListener('animationend', () => {
+			document.querySelectorAll('.todo')[tasks.length - 1].classList.remove('new');
+		})
+	}
 	todoInput.value = '';
 }
 
@@ -132,8 +136,8 @@ function deleteEditCheck(e) {
 					item.setAttribute('num', +item.getAttribute('num') - 1);
 				}
 			});
-			
-			todo.addEventListener('transitionend', function() {
+
+			todo.addEventListener('animationend', function() {
 				todo.remove();
 			});
 		}
@@ -264,9 +268,11 @@ function Task(description, deadLine, dateOfDeadLine) {
 
 function loadLocalTasks() {
 	if(localStorage.getItem('tasks').length > 0) {
+
 		JSON.parse(localStorage.getItem('tasks')).forEach((task, index) => {
 			const todoDiv = document.createElement('div');
 			todoDiv.classList.add('todo');
+			todoDiv.classList.add('reload');
 			if(task.completed) {
 				todoDiv.classList.add('completed');
 			}
@@ -297,7 +303,6 @@ function loadLocalTasks() {
 			newTodo.classList.add('todo-item');
 			todoDiv.appendChild(newTodo);
 			
-
 			const btnDiv = document.createElement('div');
 			btnDiv.classList.add('task-btns');
 
@@ -319,8 +324,17 @@ function loadLocalTasks() {
 			todoDiv.appendChild(btnDiv);
 
 			todoList.append(todoDiv);
-		
 		})
+
+		document.querySelector('.todo').addEventListener('animationend', () => {
+			for(let index = 0; index < tasks.length; index++){
+				document.querySelectorAll('.todo')[index].classList.remove('reload');
+			}
+		});
+			
+
+		
+
 	}
 }
 

@@ -117,7 +117,8 @@ form button:hover {
 	color: black;
 	display: flex;
 	justify-content: space-between;
-	transition: all 0.5s ease;
+	border-radius: .5rem;
+	max-width: 70vw;
 }
 
 .todo-item {
@@ -162,11 +163,23 @@ input.todo-item {
 	text-align: center;
 }
 
+.new,
+.reload {
+	animation: text 1s linear forwards;
+}
 
-
-.todo {
-	border-radius: .5rem;
-	max-width: 70vw;
+@keyframes text {
+	0% {
+		margin-top: -10vh;
+		opacity: 0;
+	}
+	70%{
+		opacity: 0.2;
+	}
+	100% {
+		margin-top: .5rem;
+		opacity: 1;
+	}
 }
 
 .trash-btn {
@@ -191,9 +204,20 @@ input.todo-item {
 }
 
 .fall {
-	transform: translateY(8rem) rotateZ(20deg);
-	opacity: 0;
+	animation: fall .5s ease;
 }
+
+@keyframes fall {
+	from{
+		transform: translateY(0) rotateZ(0);
+		opacity: 1;
+	}
+	to{
+		transform: translateY(8rem) rotateZ(20deg);
+		opacity: 0;
+	}
+}
+
 
 @media(max-width: 768px) {
 	.todo-input-text{
@@ -219,7 +243,7 @@ input.todo-item {
 
 @media(max-width: 330px) {
 	#tasks-settings {
-		margin-bottom: 70%;
+		margin-bottom: 20%;
 	}
 }
 
